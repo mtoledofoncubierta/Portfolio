@@ -1,0 +1,145 @@
+/* ESTILOS GENERALES */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #F5F5DC;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(to right, #000 50%, #ff0000 50%);
+  color: #fff;
+  font-size: 2em;
+}
+
+/* TABLA */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+caption {
+  caption-side: top;
+  font-weight: bold;
+  font-size: 1.2em;
+  padding: 10px;
+}
+
+/* CABECERA Y PIE */
+thead th, tfoot td {
+  background-color: #222;
+  color: #fff;
+  padding: 10px;
+  border: 2px solid #444;
+}
+
+tfoot td {
+  background: linear-gradient(to right, #000 50%, #ff0000 50%);
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9em;
+}
+
+/* FILAS Y CELDAS */
+tbody td {
+  padding: 10px;
+  border: 2px solid #ccc;
+  vertical-align: middle;
+}
+
+/* INFO DE POKÉMON */
+.poke-info {
+  display: flex;
+  align-items: center;
+}
+
+.poke-info .imagen {
+    width: 60px;       
+  height: 60px;      
+  max-width: 60px;   
+  max-height: 60px;  
+  object-fit: contain; 
+  margin-right: 10px;
+}
+
+/* NUMEROS */
+.num {
+  text-align: center;
+  font-weight: bold;
+}
+
+/* TIPOS */
+.tipo {
+  padding: 3px 8px;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+/* Colores por tipo */
+.fuego { background-color: #F08030; }
+.agua { background-color: #6890F0; }
+.planta { background-color: #78C850; }
+.volador { background-color: #A890F0; }
+.dragón { background-color: #7038F8; }
+.veneno { background-color: #A040A0; }
+.siniestro { background-color: #705848; }
+.psíquico { background-color: #F85888; }
+.hielo { background-color: #98D8D8; }
+.acero { background-color: #B8B8D0; }
+.normal { background-color: #A8A878; }
+.lucha { background-color: #C03028; }
+.fantasma { background-color: #705898; }
+.eléctrico { background-color: #F8D030; }
+
+/* MOVIMIENTOS */
+.move {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.85em;
+  margin-bottom: 2px;
+}
+
+/* BARRA DE PS */
+.hp-bar {
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.hp {
+  height: 12px;
+  background-color: #4CAF50;
+}
+
+/* Cambiar color de HP según porcentaje */
+.hp[style*="width: 80%"] { background-color: #4CAF50; }
+.hp[style*="width: 70%"] { background-color: #FF9800; }
+.hp[style*="width: 60%"] { background-color: #FF5722; }
+.hp[style*="width: 95%"] { background-color: #4CAF50; }
+.hp[style*="width: 85%"] { background-color: #8BC34A; }
+.hp[style*="width: 90%"] { background-color: #4CAF50; }
+
+.ps-text {
+  font-size: 0.8em;
+  display: block;
+  text-align: center;
+}
+footer {
+  margin-top: auto;
+}
