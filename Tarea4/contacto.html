@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contacto — Sabores de Azeroth</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="wow-bg">
+   <header class="wow-border-primary">
+        <div id="header-container">
+            <h1 class="wow-text-primary">
+                <a href="index.html" class="logo-link">Sabores de Azeroth</a>
+            </h1>
+            <nav id="main-nav">
+                <a href="index.html" class="wow-button nav-link">Inicio</a>
+                <a href="recetas.html" class="wow-button nav-link">Recetas</a>
+                <a href="cocineros.html" class="wow-button nav-link">Cocineros</a>
+                <a href="contacto.html" class="wow-button nav-link">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="recipe contact-section">
+            <h2 class="wow-text-primary contact-title">📜 Envía un Cuervo Mensajero</h2>
+            
+            <p>¿Tienes una receta ancestral de tu clan? ¿Quieres reportar un Jabalí a la brasa demasiado vivo? Envíanos tu mensaje a través del Portal de Comunicación de Azeroth. Un escriba lo revisará lo antes posible.</p>
+
+            <form class="contact-form" action="#" method="POST">
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre (o apodo en el juego):</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Thrall, Jefe de Guerra" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Ubicación (Email de contacto real):</label>
+                    <input type="email" id="email" name="email" required placeholder="jefedeguerra@horda.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="asunto">Motivo de la misiva:</label>
+                    <select id="asunto" name="asunto">
+                        <option value="receta">Compartir una Receta Épica</option>
+                        <option value="bug">Reportar un Bug/Error de Diseño</option>
+                        <option value="felicitacion">Elogios por el Festín</option>
+                        <option value="otro">Asunto No Clasificado (Otros)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mensaje">Mensaje:</label>
+                    <textarea id="mensaje" name="mensaje" rows="6" required placeholder="Escribe tu receta de guiso de cerveza o tu reporte de bug..." required></textarea>
+                </div>
+                
+                <button type="submit" class="wow-button">Enviar Misiva a Dalaran</button>
+            <div class="redes-sociales">
+                <a href="https://www.facebook.com/WorldofWarcraft.es" target="_blank" class="icon facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://x.com/MarisUxor" target="_blank" class="icon twitter">
+                <i class="fa-brands fa-x-twitter"></i>
+                </a>
+                <a href="https://instagram.com/maris_bride" target="_blank" class="icon instagram">
+                <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@WorldofWarcraftES" target="_blank" class="icon youtube">
+                <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+            </form>
+        </section>
+
+    </main>
+
+  <footer class="wow-text-primary wow-border-primary">
+        <p> 2025 Sabores de Azeroth. Un fan-site no oficial de World of Warcraft.</p>
+    </footer>
+  </div>
+</body>
+</html>
