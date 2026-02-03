@@ -1,0 +1,71 @@
+body {
+    background-image: url("img/fondo.jpg");
+    background-size: cover;     
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-color: #1a1a1a;
+    color: #f0e6d2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.game-container {
+    text-align: center;
+}
+
+h1 {
+    color: #ffcc00;
+    text-shadow: 2px 2px #000;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 120px);
+    grid-template-rows: repeat(3, 120px);
+    gap: 10px;
+    background-color: #332b21;
+    padding: 10px;
+    border: 4px solid #5c4b37;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.cell {
+    background-color: #4e4233;
+    border: 2px solid #2a2118;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.cell:hover {
+    background-color: #6d5d4a;
+}
+
+.cell img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    pointer-events: none; /* Para que no interfiera con el click */
+}
+
+#restartBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #800000;
+    color: white;
+    border: 2px solid #ffcc00;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#restartBtn:hover {
+    background-color: #a00000;
+}
