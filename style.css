@@ -77,3 +77,68 @@ body {
 .card-content a:hover {
   filter: brightness(1.2);
 }
+
+/* RESET BÁSICO */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HEADER TIPO NAVBAR */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 40px;
+
+  background: linear-gradient(90deg, #0f172a, #1e293b);
+  color: #ffffff;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+
+  z-index: 1000;
+}
+
+/* TÍTULO */
+header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* SUBTÍTULO */
+header p {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* PARA QUE NO SE TAPE EL CONTENIDO */
+body {
+  padding-top: 80px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 20px;
+    text-align: center;
+  }
+
+  header h1 {
+    font-size: 1.2rem;
+  }
+
+  header p {
+    font-size: 0.8rem;
+  }
+}
+
