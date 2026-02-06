@@ -1,119 +1,238 @@
-/* Importar fuente estilo pixel art */
+/* ===== IMPORTAR FUENTE PIXEL ART ===== */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+/* ===== RESET Y BASE DE PANTALLA GBA ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    image-rendering: pixelated; /* Mantiene todo con bordes definidos */
+}
+
 body {
-    background-color: #285068; /* Azul oscuro clásico de los fondos de menú */
+    background: #408868; /* Verde fondo Esmeralda */
+    /* Efecto de Scanlines (líneas de monitor antiguo) */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.05) 50%, transparent 50%);
+    background-size: 100% 4px;
     font-family: 'Press Start 2P', cursive;
+    color: #f8f8f8;
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: white;
-    image-rendering: pixelated;
-    margin: 0;
-    padding: 20px;
+    min-height: 100vh;
 }
 
 h1 {
-    font-size: 18px;
-    text-shadow: 2px 2px #000;
-    margin-bottom: 30px;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    text-shadow: 4px 4px #183830;
+    letter-spacing: 2px;
 }
 
-/* Contenedor principal estilo rejilla GBA */
+/* ===== CONTENEDOR DEL EQUIPO (GRID GRANDE) ===== */
 .team-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Dos columnas como en el juego */
-    gap: 15px;
-    width: 90%;
-    max-width: 800px;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+    gap: 24px;
+    max-width: 1100px;
+    width: 100%;
 }
 
-/* Cada slot de Pokémon */
+/* ===== SLOT POKÉMON (ESTILO ROBUSTO) ===== */
 .pokemon-slot {
-    background: linear-gradient(180deg, #4890a8 0%, #306888 100%);
-    border: 3px solid #f8f8f8;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: inset -2px -2px 0px #183040, 4px 4px 0px rgba(0,0,0,0.3);
     position: relative;
-    overflow: hidden;
+    min-height: 120px; /* Altura aumentada */
+    background: #70c8a0; 
+    border: 4px solid #183830;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 100px 1fr; /* Espacio generoso para el sprite */
+    align-items: center;
+    gap: 20px;
+    
+    /* Biselado interno estilo GBA */
+    box-shadow: 
+        inset 5px 5px 0 #b0e0c8,   
+        inset -5px -5px 0 #408868, 
+        6px 6px 0 #183820;
+    
+    transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
 }
 
-/* Efecto de brillo en el slot */
-.pokemon-slot::before {
-    content: "";
+/* ===== EFECTO HOVER Y MANITA SELECCIONADORA ===== */
+.pokemon-slot:hover {
+    background: #a8e8c8;
+    transform: translateX(10px) scale(1.02);
+    box-shadow: 
+        inset 5px 5px 0 #d0f0e0,
+        inset -5px -5px 0 #58a080,
+        8px 8px 0 #183820;
+}
+
+/* La manita de selección */
+.pokemon-slot:hover::before {
+    content: '';
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 50%;
-    background: rgba(255,255,255,0.1);
-    pointer-events: none;
+    left: -45px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 22px;
+    background-color: #f8f8f8;
+    /* Flecha pixelada */
+    clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%);
+    border: 2px solid #000;
+    animation: finger-point 0.5s infinite alternate;
+    filter: drop-shadow(3px 3px 0px #183830);
 }
 
-.poke-header {
+@keyframes finger-point {
+    from { left: -50px; }
+    to { left: -40px; }
+}
+
+/* ===== SPRITE ANIMADO (ESCALADO) ===== */
+.poke-icon {
+    width: 100px;
+    height: 100px;
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    justify-content: center;
 }
 
-.poke-icon {
-    width: 64px;
-    height: 64px;
-    margin-right: 10px;
-    filter: drop-shadow(2px 2px 0px #000);
+.sprite {
+    width: 48px;
+    height: 48px;
+    background-repeat: no-repeat;
+    background-size: 96px 48px;
+    transform: scale(1.8); /* Sprite más grande y visible */
+    image-rendering: pixelated;
+    animation: idle 0.7s steps(2) infinite !important;
+}
+
+@keyframes idle {
+    from { background-position: 0 0; }
+    to   { background-position: -96px 0; }
+}
+
+/* ===== INFORMACIÓN DEL POKÉMON ===== */
+.poke-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .poke-name {
-    font-size: 12px;
+    display: flex;
+    justify-content: space-between; /* Nombre izquierda, Género derecha */
+    align-items: center;
+    font-size: 1rem;
+    color: #183830;
     text-transform: uppercase;
-    flex-grow: 1;
+    margin-bottom: 8px;
+}
+/* ===== SÍMBOLO DE GÉNERO (TRAZO GRUESO / BOLDBLOCK) ===== */
+.gender {
+    font-size: 2rem; /* Tamaño base grande */
+    display: inline-block;
+    line-height: 1;
+    text-shadow: none; /* Limpiamos sombras previas */
+    
+    /* EL TRUCO: Creamos un borde del mismo color que la fuente para engrosarla */
+    /* El valor 3px aquí define el grosor del "pincel" */
+    -webkit-text-stroke: 4px currentColor; 
+    
+    /* Refuerzo para navegadores que no soportan stroke */
+    font-weight: 900;
+    
+    /* Renderizado limpio */
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
+    
+    /* Ajuste para que no flote */
+    transform: translateY(4px);
+}
+
+.gender.male { 
+    color: #30a0f8; 
+}
+
+.gender.female { 
+    color: #f858a8; 
 }
 
 .poke-level {
-    font-size: 10px;
-    color: #f8d030; /* Color dorado para el nivel */
+    font-size: 0.75rem;
+    color: #f8f8f8;
+    background: #383838;
+    padding: 3px 8px;
+    border: 2px solid #000;
+    align-self: flex-start;
+    margin-bottom: 10px;
 }
 
-/* Contenedor de HP (Puntos de Salud) */
+/* ===== BARRA DE HP (MÁS GRANDE) ===== */
 .hp-container {
-    background: #404040;
-    border: 2px solid #000;
-    padding: 4px;
-    border-radius: 5px;
+    margin-top: 5px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
 }
 
-.hp-bar {
-    width: 100%;
-    height: 10px;
-    background: #202020;
-    border-radius: 2px;
-    margin-bottom: 5px;
+.hp-bar-main {
     position: relative;
-    border: 1px solid #707070;
+    height: 16px; /* Más gruesa */
+    background: #303030;
+    border: 3px solid #000;
+    width: 100%;
 }
 
-/* La barra verde dinámica */
-.hp {
+/* Etiqueta HP pequeña */
+.hp-bar-main::before {
+    content: 'HP';
+    position: absolute;
+    left: -35px;
+    top: 0px;
+    color: #f8d030;
+    font-size: 0.65rem;
+    font-weight: bold;
+}
+
+.hp-fill {
     height: 100%;
-    background: linear-gradient(90deg, #70f8a8 0%, #40c078 100%);
-    border-radius: 1px;
-    transition: width 0.5s ease-in-out;
+    background: #40d840; /* Verde */
+    box-shadow: inset 0 3px 0 #80f880; /* Brillo interno más marcado */
+    transition: width 0.4s ease-out;
 }
 
-/* Cambiar color si la vida es baja (opcional con JS, aquí estático) */
-.hp[style*="width: 2"], .hp[style*="width: 1"] {
-    background: linear-gradient(90deg, #f85838 0%, #a03020 100%); /* Rojo */
-}
+/* Colores de estado del dataset */
+.hp-fill[data-hp="medium"] { background: #f8d030; box-shadow: inset 0 3px 0 #f8f878; }
+.hp-fill[data-hp="low"] { background: #f85830; box-shadow: inset 0 3px 0 #f8a090; }
 
 .hp-text {
-    font-size: 9px;
-    letter-spacing: 1px;
+    font-size: 0.7rem;
+    text-align: right;
+    margin-top: 6px;
+    color: #183830;
+    font-weight: bold;
 }
 
-/* Responsivo para móviles (una columna) */
-@media (max-width: 600px) {
+/* ===== RESPONSIVE ===== */
+@media (max-width: 850px) {
     .team-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Una columna en móviles */
+    }
+    .pokemon-slot:hover {
+        transform: scale(1.02); /* Menos desplazamiento en móvil */
     }
 }
+
+/* ===== SPRITES (RUTAS) ===== */
+.charizard  { background-image: url("img/charizard.png"); }
+.kingdra    { background-image: url("img/KINGDRA.png"); }
+.gardevoir  { background-image: url("img/GARDEVOIR.png"); }
+.umbreon    { background-image: url("img/umbreon.png"); }
+.dragapult  { background-image: url("img/DRAGAPULT.png"); }
+.snorlax    { background-image: url("img/SNORLAX.png"); }
