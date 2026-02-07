@@ -57,3 +57,63 @@ document.querySelectorAll('.pokemon-slot').forEach(slot => {
         actualizarInterfaz(slot, actual, max);
     });
 });
+
+const datosPokemon = {
+    "charizard": { stats: { ATK: 84, DEF: 78, SPD: 100 }, moves: ["Lanzallamas", "Vuelo", "Garra Dragón", "Tajo Aéreo"] },
+    "kingdra": { stats: { ATK: 95, DEF: 95, SPD: 85 }, moves: ["Surf", "Rayo Hielo", "Danza Dragón", "Hidrobomba"] },
+    "gardevoir": { stats: { ATK: 65, DEF: 65, SPD: 80 }, moves: ["Psíquico", "Paz Mental", "Rayo", "Brillo Mágico"] },
+    "umbreon": { stats: { ATK: 65, DEF: 110, SPD: 65 }, moves: ["Luz Lunar", "Tóxico", "Vendetta", "Protección"] },
+    "dragapult": { stats: { ATK: 120, DEF: 75, SPD: 142 }, moves: ["Draco Flechas", "Espectro-golpe", "Lanzallamas", "U-turn"] },
+    "snorlax": { stats: { ATK: 110, DEF: 65, SPD: 30 }, moves: ["Golpe Cuerpo", "Descanso", "Terremoto", "Maldición"] }
+};
+
+const modal = document.getElementById("pokemon-modal");
+const closeModal = document.querySelector(".close-modal");
+
+// Abrir Ficha al hacer click
+document.querySelectorAll('.pokemon-slot').forEach(slot => {
+    slot.addEventListener('click', function(e) {
+        // Si no estás pulsando Shift/Alt (que es para curar), abrimos la ficha
+        if (!e.shiftKey && !e.altKey && !e.ctrlKey) {
+            const pokeClass = this.querySelector('.sprite').classList[1]; // charizard, kingdra, etc.
+            const nombre = this.querySelector('.poke-name span:first-child').innerText;
+            const nivel = this.querySelector('.poke-level').innerText;
+            
+            abrirFicha(pokeClass, nombre, nivel);
+        }
+    });
+});
+
+function abrirFicha(key, nombre, nivel) {
+    const data = datosPokemon[key];
+    document.getElementById("modal-name").innerText = nombre;
+    document.getElementById("modal-level").innerText = nivel;
+    
+    // Configurar Sprite
+    const sprite = document.getElementById("modal-sprite");
+    sprite.className = "sprite " + key; // Esto hereda la imagen de tu CSS
+
+    // Cargar Stats
+    const statsDiv = document.getElementById("modal-stats");
+    statsDiv.innerHTML = "";
+    for (let stat in data.stats) {
+        statsDiv.innerHTML += `
+            <div class="stat-row">
+                ${stat}: ${data.stats[stat]}
+                <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: ${data.stats[stat]}%"></div></div>
+            </div>`;
+    }
+
+    // Cargar Movimientos
+    const movesDiv = document.getElementById("modal-moves");
+    movesDiv.innerHTML = "";
+    data.moves.forEach(move => {
+        movesDiv.innerHTML += `<div class="move-card">${move}</div>`;
+    });
+
+    modal.style.display = "block";
+}
+
+// Cerrar Modal
+closeModal.onclick = () => modal.style.display = "none";
+window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; }
