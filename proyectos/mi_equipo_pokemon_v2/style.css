@@ -6,12 +6,11 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    image-rendering: pixelated; /* Mantiene todo con bordes definidos */
+    image-rendering: pixelated; 
 }
 
 body {
-    background: #408868; /* Verde fondo Esmeralda */
-    /* Efecto de Scanlines (líneas de monitor antiguo) */
+    background: #408868;
     background-image: linear-gradient(rgba(0, 0, 0, 0.05) 50%, transparent 50%);
     background-size: 100% 4px;
     font-family: 'Press Start 2P', cursive;
@@ -31,294 +30,227 @@ h1 {
     letter-spacing: 2px;
 }
 
-/* ===== CONTENEDOR DEL EQUIPO (GRID GRANDE) ===== */
+/* ===== CONTENEDOR DEL EQUIPO ===== */
 .team-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Dos columnas */
-    gap: 24px;
-    max-width: 1100px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    width: 95%;
+}
+
+/* ===== SLOT POKÉMON (ESTRUCTURA, FLECHA Y HOVER) ===== */
+.pokemon-slot {
+    position: relative;
+    min-height: 150px;
+    background: #70c8a0; 
+    border: 6px solid #183830;
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 120px 1fr 50px;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 
+        inset 6px 6px 0 #b0e0c8,   
+        inset -6px -6px 0 #408868, 
+        10px 10px 0 #183820;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    overflow: visible;
+}
+
+/* FLECHA PIXEL PARPADEANTE */
+.pokemon-slot::before {
+    content: ''; 
+    position: absolute;
+    left: -45px; 
+    width: 22px;
+    height: 22px;
+    background-color: #f8f8f8;
+    clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+    filter: drop-shadow(3px 3px 0px #183830);
+    opacity: 0;
+    pointer-events: none;
+    transition: left 0.2s ease;
+}
+
+.pokemon-slot:hover {
+    background: #a8e8c8;
+    transform: translateX(15px);
+    box-shadow: 
+        inset 6px 6px 0 #d0f0e0,   
+        inset -6px -6px 0 #58a080, 
+        15px 15px 0 #081810;
+}
+
+.pokemon-slot:hover::before {
+    opacity: 1;
+    left: -35px;
+    animation: blink-retro 0.3s steps(1) infinite;
+}
+
+@keyframes blink-retro {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ===== INDICADORES DE GÉNERO ===== */
+.gender {
+    font-size: 1.3rem; 
+    text-align: center;
+    font-weight: 900;
+    -webkit-text-stroke: 4px currentColor; 
+    paint-order: stroke fill;
+    text-shadow: none !important;
+}
+
+.gender-macho { color: #30a7d7; }
+.gender-hembra { color: #ff69b4; }
+
+/* ===== BARRAS DE VIDA (HP) ===== */
+.hp-container {
+    margin-top: 8px;
     width: 100%;
 }
 
-/* ===== SLOT POKÉMON (ESTILO ROBUSTO) ===== */
-.pokemon-slot {
+.hp-bar-main {
+    width: 100%;
+    height: 12px;
+    background-color: #383838;
+    border: 2px solid #183830;
     position: relative;
-    min-height: 120px; /* Altura aumentada */
-    background: #70c8a0; 
-    border: 4px solid #183830;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: 100px 1fr; /* Espacio generoso para el sprite */
-    align-items: center;
-    gap: 20px;
-    
-    /* Biselado interno estilo GBA */
-    box-shadow: 
-        inset 5px 5px 0 #b0e0c8,   
-        inset -5px -5px 0 #408868, 
-        6px 6px 0 #183820;
-    
-    transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    cursor: pointer;
+    border-radius: 2px;
+    overflow: hidden;
 }
 
-/* ===== EFECTO HOVER Y MANITA SELECCIONADORA ===== */
-.pokemon-slot:hover {
-    background: #a8e8c8;
-    transform: translateX(10px) scale(1.02);
-    box-shadow: 
-        inset 5px 5px 0 #d0f0e0,
-        inset -5px -5px 0 #58a080,
-        8px 8px 0 #183820;
+.hp-fill {
+    height: 100%;
+    width: 0%; 
+    transition: width 0.5s ease-in-out;
+    background: linear-gradient(to bottom, #70f8a8, #48d080); 
 }
 
-/* La manita de selección */
-.pokemon-slot:hover::before {
-    content: '';
-    position: absolute;
-    left: -45px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 22px;
-    background-color: #f8f8f8;
-    /* Flecha pixelada */
-    clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%);
-    border: 2px solid #000;
-    animation: finger-point 0.5s infinite alternate;
-    filter: drop-shadow(3px 3px 0px #183830);
+.hp-fill[data-hp="high"] { background: linear-gradient(to bottom, #70f8a8, #48d080); }
+.hp-fill[data-hp="medium"] { background: linear-gradient(to bottom, #f8e070, #f8d030); }
+.hp-fill[data-hp="low"] { background: linear-gradient(to bottom, #f8a090, #f85838); }
+
+.hp-text {
+    font-size: 0.65rem;
+    color: #183830;
+    text-align: right;
+    margin-top: 6px;
 }
 
-@keyframes finger-point {
-    from { left: -50px; }
-    to { left: -40px; }
+.poke-name { 
+    font-size: 1rem;
+    color: #183830; 
+    margin-bottom: 5px;
+    text-transform: uppercase;
 }
 
-/* ===== SPRITE ANIMADO (ESCALADO) ===== */
+.poke-level { font-size: 0.7rem; color: #183830; opacity: 0.9; }
+
 .poke-icon {
-    width: 100px;
-    height: 100px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    width: 100px;
 }
 
+/* ===== SPRITES MENÚ (CON ACELERACIÓN TURBO Y SALTO) ===== */
 .sprite {
     width: 48px;
     height: 48px;
     background-repeat: no-repeat;
-    background-size: 96px 48px;
-    transform: scale(1.8); /* Sprite más grande y visible */
-    image-rendering: pixelated;
-    animation: idle 0.7s steps(2) infinite !important;
+    background-size: 96px 48px; 
+    transform: scale(2.2) translateX(10px); 
+    transform-origin: center;
+    /* Transición suave para el salto y el brillo */
+    transition: margin-top 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.15s ease;
+    animation: idle 0.7s steps(2) infinite;
 }
+
+/* EFECTO SELECCIÓN: ACELERACIÓN + SALTO + BRILLO */
+.pokemon-slot:hover .sprite {
+    animation-duration: 0.15s !important; /* Velocidad Turbo */
+    margin-top: -12px; /* Salto notable */
+    filter: brightness(1.2); /* Resalte visual */
+}
+
+.sprite.charizard  { background-image: url("img/charizard.png"); }
+.sprite.kingdra    { background-image: url("img/KINGDRA.png"); }
+.sprite.gardevoir  { background-image: url("img/GARDEVOIR.png"); }
+.sprite.umbreon    { background-image: url("img/umb.png.png"); } 
+.sprite.dragapult  { background-image: url("img/DRAGAPULT.png"); }
+.sprite.snorlax    { background-image: url("img/SNORLAX.png"); }
 
 @keyframes idle {
     from { background-position: 0 0; }
     to   { background-position: -96px 0; }
 }
 
-/* ===== INFORMACIÓN DEL POKÉMON ===== */
-.poke-info {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.poke-name {
-    display: flex;
-    justify-content: space-between; /* Nombre izquierda, Género derecha */
-    align-items: center;
-    font-size: 1rem;
-    color: #183830;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-}
-/* ===== SÍMBOLO DE GÉNERO (TRAZO GRUESO / BOLDBLOCK) ===== */
-.gender {
-    font-size: 2rem; /* Tamaño base grande */
-    display: inline-block;
-    line-height: 1;
-    text-shadow: none; /* Limpiamos sombras previas */
-    
-    /* EL TRUCO: Creamos un borde del mismo color que la fuente para engrosarla */
-    /* El valor 3px aquí define el grosor del "pincel" */
-    -webkit-text-stroke: 4px currentColor; 
-    
-    /* Refuerzo para navegadores que no soportan stroke */
-    font-weight: 900;
-    
-    /* Renderizado limpio */
-    image-rendering: pixelated;
-    -webkit-font-smoothing: none;
-    
-    /* Ajuste para que no flote */
-    transform: translateY(4px);
-}
-
-.gender.male { 
-    color: #30a0f8; 
-}
-
-.gender.female { 
-    color: #f858a8; 
-}
-
-.poke-level {
-    font-size: 0.75rem;
-    color: #f8f8f8;
-    background: #383838;
-    padding: 3px 8px;
-    border: 2px solid #000;
-    align-self: flex-start;
-    margin-bottom: 10px;
-}
-
-/* ===== BARRA DE HP (MÁS GRANDE) ===== */
-.hp-container {
-    margin-top: 5px;
-    display: flex;
-    flex-direction: column;
-}
-
-.hp-bar-main {
-    position: relative;
-    height: 16px; /* Más gruesa */
-    background: #303030;
-    border: 3px solid #000;
-    width: 100%;
-}
-
-/* Etiqueta HP pequeña */
-.hp-bar-main::before {
-    content: 'HP';
-    position: absolute;
-    left: -35px;
-    top: 0px;
-    color: #f8d030;
-    font-size: 0.65rem;
-    font-weight: bold;
-}
-
-.hp-fill {
-    height: 100%;
-    background: #40d840; /* Verde */
-    box-shadow: inset 0 3px 0 #80f880; /* Brillo interno más marcado */
-    transition: width 0.4s ease-out;
-}
-
-/* Colores de estado del dataset */
-.hp-fill[data-hp="medium"] { background: #f8d030; box-shadow: inset 0 3px 0 #f8f878; }
-.hp-fill[data-hp="low"] { background: #f85830; box-shadow: inset 0 3px 0 #f8a090; }
-
-.hp-text {
-    font-size: 0.7rem;
-    text-align: right;
-    margin-top: 6px;
-    color: #183830;
-    font-weight: bold;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 850px) {
-    .team-container {
-        grid-template-columns: 1fr; /* Una columna en móviles */
-    }
-    .pokemon-slot:hover {
-        transform: scale(1.02); /* Menos desplazamiento en móvil */
-    }
-}
-
-/* ===== MODAL (FICHA DETALLADA) ===== */
-.modal {
-    display: none; /* Oculto por defecto */
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.8);
-    backdrop-filter: blur(4px);
-}
-
-.modal-content {
-    background-color: #e0e0e0;
-    margin: 5% auto;
-    padding: 20px;
-    border: 6px solid #183830;
-    width: 80%;
-    max-width: 500px;
-    position: relative;
-    box-shadow: 8px 8px 0 #000;
-}
-
-.close-modal {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 2rem;
-    cursor: pointer;
-    color: #183830;
-}
-
+/* ===== MODAL Y OTROS ===== */
 .modal-header {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
     background: #70c8a0;
-    padding: 15px;
-    border: 4px solid #183830;
+    padding: 110px 20px; 
+    border: 6px solid #183830;
     margin-bottom: 20px;
+    position: relative; 
+    overflow: visible; 
 }
 
-#modal-sprite {
-    transform: scale(2);
+#modal-sprite.sprite-detail {
+    display: block !important;
+    margin: 0 auto;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    transform: scale(3.5); 
+    transform-origin: center center;
+    position: relative;
+    z-index: 5;
 }
 
-.modal-body {
-    display: grid;
-    gap: 20px;
-    color: #183830;
-}
+/* Animaciones del Modal Detalladas */
+@keyframes play-charizard { from { background-position: 0 0; } to { background-position: -13013px 0; } }
+@keyframes play-kingdra   { from { background-position: 0 0; } to { background-position: -4914px 0; } }
+@keyframes play-gardevoir { from { background-position: 0 0; } to { background-position: -9317px 0; } }
+@keyframes play-umbreon   { from { background-position: 0 0; } to { background-position: -3315px 0; } }
+@keyframes play-dragapult { from { background-position: 0 0; } to { background-position: -6100px 0; } }
+@keyframes play-snorlax   { from { background-position: 0 0; } to { background-position: -12975px 0; } }
 
-/* Estilos de Movimientos */
-.moves-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-}
+#modal-sprite.sprite-detail.charizard { width: 91px; height: 91px; background-image: url("img/CHARIZARD_sprite.png") !important; background-size: 13013px 91px !important; animation: play-charizard 3s steps(143) infinite !important; }
+#modal-sprite.sprite-detail.kingdra   { width: 91px; height: 91px; background-image: url("img/KINGDRA_sprite.png") !important; background-size: 4914px 91px !important; animation: play-kingdra 2s steps(54) infinite !important; }
+#modal-sprite.sprite-detail.gardevoir { width: 77px; height: 77px; background-image: url("img/GARDEVOIR_sprite.png") !important; background-size: 9356px 77px !important; animation: play-gardevoir 3s steps(121) infinite !important; }
+#modal-sprite.sprite-detail.umbreon   { width: 51px; height: 51px; background-image: url("img/UMBREON_sprite.png") !important; background-size: 3315px 51px !important; animation: play-umbreon 2s steps(65) infinite !important; }
+#modal-sprite.sprite-detail.dragapult { width: 100px; height: 100px; background-image: url("img/DRAGAPULT_sprite.png") !important; background-size: 6100px 100px !important; animation: play-dragapult 2.5s steps(61) infinite !important; }
+#modal-sprite.sprite-detail.snorlax   { width: 75px; height: 75px; background-image: url("img/SNORLAX_sprite.png") !important; background-size: 12975px 75px !important; animation: play-snorlax 5s steps(173) infinite !important; }
 
-.move-card {
-    background: #f8f8f8;
-    border: 2px solid #183830;
-    padding: 8px;
-    font-size: 0.6rem;
-    text-transform: uppercase;
-}
+#modal-name { position: absolute; bottom: 12px; left: 15px; font-size: 0.9rem; color: #183830; text-transform: uppercase; z-index: 10; background: rgba(248, 248, 248, 0.4); padding: 4px 8px; border-radius: 2px; }
+#modal-level { position: absolute; bottom: 12px; right: 15px; font-size: 0.75rem; color: #f8f8f8; background: #383838; padding: 3px 6px; border: 2px solid #000; z-index: 10; }
 
-/* Estilos de Stats */
-.stat-row {
-    margin-bottom: 8px;
-    font-size: 0.6rem;
-}
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(4px); }
+.modal-content { background-color: #e0e0e0; margin: 2% auto; padding: 20px; border: 8px solid #183830; width: 90%; max-width: 500px; box-shadow: 10px 10px 0 #000; }
+#modal-moves { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+.move-card { padding: 12px; border: 4px solid #000; text-align: center; font-size: 0.55rem; color: white; text-shadow: 1px 1px 2px #000; text-transform: uppercase; }
 
-.stat-bar-bg {
-    background: #383838;
-    height: 10px;
-    width: 100%;
-    margin-top: 4px;
-}
-
-.stat-bar-fill {
-    height: 100%;
-    background: #f8d030; /* Amarillo stats */
-}
-
-/* ===== SPRITES (RUTAS) ===== */
-.charizard  { background-image: url("img/charizard.png"); }
-.kingdra    { background-image: url("img/KINGDRA.png"); }
-.gardevoir  { background-image: url("img/GARDEVOIR.png"); }
-.umbreon    { background-image: url("img/umb.png.png"); }
-.dragapult  { background-image: url("img/DRAGAPULT.png"); }
-.snorlax    { background-image: url("img/SNORLAX.png"); }
+/* COLORES DE TIPOS */
+.type-fuego { background: #F08030; border-color: #9C531F; }
+.type-agua { background: #6890F0; border-color: #445E9C; }
+.type-planta { background: #78C850; border-color: #4E8234; }
+.type-psiquico { background: #F85888; border-color: #A13959; }
+.type-siniestro { background: #705848; border-color: #49392F; }
+.type-dragon { background: #7038F8; border-color: #4924A1; }
+.type-fantasma { background: #705898; border-color: #493963; }
+.type-normal { background: #A8A878; border-color: #6D6D4E; }
+.type-electrico { background: #F8D030; border-color: #A1871F; }
+.type-hielo { background: #98D8D8; border-color: #638D8D; }
+.type-veneno { background: #A040A0; border-color: #682A68; }
+.type-vuelo { background: #A890F0; border-color: #6D5E9C; }
+.type-hada { background: #EE99AC; border-color: #9B6470; }
+.type-acero { background: #B8B8D0; border-color: #787887; }
+.type-bicho { background: #A8B820; border-color: #6D7815; }
+.type-tierra { background: #E0C068; border-color: #927D44; }

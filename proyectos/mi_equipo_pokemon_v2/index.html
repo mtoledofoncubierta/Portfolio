@@ -11,61 +11,63 @@
     <h1>Equipo Pokémon</h1>
 
     <div class="team-container">
-        
-        <div class="pokemon-slot">
+        <div class="pokemon-slot" onclick="openModal('charizard')">
             <div class="poke-icon">
                 <div class="sprite charizard"></div>
             </div>
             <div class="poke-info">
-                <span class="poke-name">Charizard<span class="gender male">♂</span></span></span>
+                <span class="poke-name">Charizard</span>
                 <span class="poke-level">Lv. 100</span>
                 <div class="hp-container">
                     <div class="hp-bar-main">
-                        <div class="hp-fill" style="width: 100%;"></div>
+                        <div class="hp-fill" data-hp="high" style="width: 100%;"></div>
                     </div>
                     <p class="hp-text">297 / 297</p>
                 </div>
             </div>
+            <div class="gender gender-macho">♂</div>
         </div>
 
-        <div class="pokemon-slot">
+        <div class="pokemon-slot" onclick="openModal('kingdra')">
             <div class="poke-icon">
                 <div class="sprite kingdra"></div>
             </div>
             <div class="poke-info">
-                <span class="poke-name">Kingdra<span class="gender male">♂</span></span>
+                <span class="poke-name">Kingdra</span>
                 <span class="poke-level">Lv. 50</span>
                 <div class="hp-container">
                     <div class="hp-bar-main">
-                        <div class="hp-fill" style="width: 100%;"></div>
+                        <div class="hp-fill" data-hp="high" style="width: 100%;"></div>
                     </div>
                     <p class="hp-text">150 / 150</p>
                 </div>
             </div>
+            <div class="gender gender-macho">♂</div>
         </div>
 
-        <div class="pokemon-slot">
+        <div class="pokemon-slot" onclick="openModal('gardevoir')">
             <div class="poke-icon">
                 <div class="sprite gardevoir"></div>
             </div>
             <div class="poke-info">
-                <span class="poke-name">Gardevoir<span class="gender female">♀</span></span>
+                <span class="poke-name">Gardevoir</span>
                 <span class="poke-level">Lv. 65</span>
                 <div class="hp-container">
                     <div class="hp-bar-main">
-                        <div class="hp-fill" style="width: 100%;"></div>
+                        <div class="hp-fill" data-hp="high" style="width: 100%;"></div>
                     </div>
                     <p class="hp-text">182 / 182</p>
                 </div>
             </div>
+            <div class="gender gender-hembra">♀</div>
         </div>
 
-        <div class="pokemon-slot">
+        <div class="pokemon-slot" onclick="openModal('umbreon')">
             <div class="poke-icon">
                 <div class="sprite umbreon"></div>
             </div>
             <div class="poke-info">
-                <span class="poke-name">Umbreon<span class="gender male">♂</span></span>
+                <span class="poke-name">Umbreon</span>
                 <span class="poke-level">Lv. 70</span>
                 <div class="hp-container">
                     <div class="hp-bar-main">
@@ -74,30 +76,32 @@
                     <p class="hp-text">105 / 235</p>
                 </div>
             </div>
+            <div class="gender gender-macho">♂</div>
         </div>
 
-        <div class="pokemon-slot">
+        <div class="pokemon-slot" onclick="openModal('dragapult')">
             <div class="poke-icon">
                 <div class="sprite dragapult"></div>
             </div>
             <div class="poke-info">
-                <span class="poke-name">Dragapult<span class="gender female">♀</span></span>
+                <span class="poke-name">Dragapult</span>
                 <span class="poke-level">Lv. 88</span>
                 <div class="hp-container">
                     <div class="hp-bar-main">
-                        <div class="hp-fill" style="width: 100%;"></div>
+                        <div class="hp-fill" data-hp="high" style="width: 100%;"></div>
                     </div>
                     <p class="hp-text">270 / 270</p>
                 </div>
             </div>
+            <div class="gender gender-hembra">♀</div>
         </div>
 
-        <div class="pokemon-slot">
+        <div class="pokemon-slot" onclick="openModal('snorlax')">
             <div class="poke-icon">
                 <div class="sprite snorlax"></div>
             </div>
             <div class="poke-info">
-                <span class="poke-name">Snorlax<span class="gender male">♂</span></span>
+                <span class="poke-name">Snorlax</span>
                 <span class="poke-level">Lv. 95</span>
                 <div class="hp-container">
                     <div class="hp-bar-main">
@@ -106,35 +110,27 @@
                     <p class="hp-text">54 / 360</p>
                 </div>
             </div>
+            <div class="gender gender-macho">♂</div>
         </div>
-
     </div>
+
     <div id="pokemon-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        
-        <div class="modal-header">
-            <div id="modal-sprite" class="sprite"></div>
-            <div class="header-info">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <div id="modal-sprite" class="sprite-detail"></div>
                 <h2 id="modal-name">NOMBRE</h2>
                 <span id="modal-level">Lv. 100</span>
             </div>
-        </div>
-
-        <div class="modal-body">
-            <div class="stats-section">
-                <h3>Estadísticas</h3>
-                <div id="modal-stats">
-                    </div>
-            </div>
-            <div class="moves-section">
-                <h3>Movimientos</h3>
-                <div id="modal-moves" class="moves-grid">
-                    </div>
+            <div class="modal-body">
+                <div class="moves-container">
+                    <h3>Movimientos</h3>
+                    <div id="modal-moves" class="moves-grid"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script src="js.js"></script>
+
+    <script src="js.js"></script>
 </body>
 </html>
