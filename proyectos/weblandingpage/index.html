@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeHub - Entrenador Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        .map-container { 
+            background-image: url('https://img.itch.zone/aW1nLzI0MTI2NTUucG5n/original/YyY6%2Bf.png'); 
+            background-size: cover; 
+            background-position: center;
+            height: 500px; 
+        }
+        #autocomplete-list::-webkit-scrollbar, #avatar-options::-webkit-scrollbar { width: 5px; }
+        #autocomplete-list::-webkit-scrollbar-track, #avatar-options::-webkit-scrollbar-track { background: #1e293b; }
+        #autocomplete-list::-webkit-scrollbar-thumb, #avatar-options::-webkit-scrollbar-thumb { background: #eab308; border-radius: 10px; }
+        #user-avatar, .pixelated { image-rendering: pixelated; }
+        .hero-bg { background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); }
+        
+        .reveal-child {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
+        }
+        .active-child {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        /* Efecto scanline para el video retro */
+        .scanlines {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white overflow-x-hidden font-sans">
+
+    <nav class="fixed top-0 w-full bg-slate-900/95 backdrop-blur-md z-[100] p-4 border-b border-yellow-500/30">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-yellow-400 tracking-tighter italic">POKÉ<span class="text-white">HUB</span></h1>
+            <button onclick="toggleMenu()" class="md:hidden text-yellow-500 p-2 focus:outline-none border border-yellow-500/20 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+            <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest">
+                <a href="#home" class="hover:text-yellow-400 transition-colors">Inicio</a>
+                <a href="#teambuilder" class="hover:text-yellow-400 transition-colors">Team Builder</a>
+                <a href="#quiz" class="hover:text-yellow-400 transition-colors">Test</a>
+                <a href="#map" class="hover:text-yellow-400 transition-colors">Mapa</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="min-h-screen flex items-center justify-center hero-bg pt-28 px-6">
+        <div class="max-w-[1440px] w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-9 text-center lg:text-left">
+                <div class="inline-block px-4 py-1.5 mb-6 border border-yellow-500/50 rounded-full bg-yellow-500/10 text-yellow-500 text-[10px] font-black uppercase tracking-[0.3em] animate__animated animate__fadeIn">
+                    Versión 2026 • PokeAPI
+                </div>
+                <h2 class="text-5xl md:text-8xl font-black italic uppercase tracking-tighter mb-6 leading-none animate__animated animate__zoomIn">
+                    TU DESTINO <br> <span class="text-yellow-500">POKÉMON</span>
+                </h2>
+                
+                <p class="text-slate-400 max-w-2xl lg:mx-0 mx-auto mb-12 text-lg font-medium min-h-[1.5em]">
+                    <span id="changing-text" class="transition-opacity duration-500">Gestiona tu equipo, descubre tu identidad y explora las rutas de Kanto.</span>
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate__animated animate__fadeInUp animate__delay-1s">
+                    <a href="#teambuilder" class="group p-8 bg-slate-800/50 border border-slate-700 rounded-[2.5rem] hover:border-yellow-500 transition-all duration-300 hover:-translate-y-2">
+                        <div class="w-12 h-12 bg-yellow-500 text-black rounded-2xl flex items-center justify-center mb-6 mx-auto lg:mx-0 group-hover:scale-110 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+                        </div>
+                        <h3 class="font-black italic uppercase text-xl mb-2">Team Builder</h3>
+                        <p class="text-slate-500 text-sm italic">Crea el equipo de 6 definitivo.</p>
+                    </a>
+
+                    <a href="#quiz" class="group p-8 bg-slate-800/50 border border-slate-700 rounded-[2.5rem] hover:border-indigo-500 transition-all duration-300 hover:-translate-y-2">
+                        <div class="w-12 h-12 bg-indigo-500 text-white rounded-2xl flex items-center justify-center mb-6 mx-auto lg:mx-0 group-hover:scale-110 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h3 class="font-black italic uppercase text-xl mb-2">Test</h3>
+                        <p class="text-slate-500 text-sm italic">Descubre tu Pokémon interior.</p>
+                    </a>
+
+                    <a href="#map" class="group p-8 bg-slate-800/50 border border-slate-700 rounded-[2.5rem] hover:border-red-500 transition-all duration-300 hover:-translate-y-2">
+                        <div class="w-12 h-12 bg-red-500 text-white rounded-2xl flex items-center justify-center mb-6 mx-auto lg:mx-0 group-hover:scale-110 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        </div>
+                        <h3 class="font-black italic uppercase text-xl mb-2">Explorador</h3>
+                        <p class="text-slate-500 text-sm italic">Viaja por las rutas clásicas.</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3 hidden lg:block animate__animated animate__fadeInRight">
+                <div class="relative group">
+                    <span class="absolute -top-3 left-6 z-10 bg-red-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-tighter shadow-xl border-2 border-slate-900">
+                        Nostalgia GBA
+                    </span>
+                    <div class="bg-slate-800 border-2 border-slate-700 rounded-[3rem] p-2 overflow-hidden shadow-2xl group-hover:border-red-500 transition-all duration-500">
+                        <div class="rounded-[2.5rem] overflow-hidden aspect-[9/16] bg-black relative flex items-center justify-center">
+                            <video 
+                                autoplay 
+                                muted 
+                                loop 
+                                playsinline
+                                class="absolute inset-0 w-full h-full object-contain scale-[1.1] pixelated z-0"
+                            >
+                                <source src="img/YTDown.com_YouTube_Gengar-VS-Nidorino-Fire-Red-Leaf-Green_Media_VWftH8BstEM_001_1080p.mp4" type="video/mp4">
+                                Tu navegador no soporta videos.
+                            </video>
+                            
+                            <div class="scanlines"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40 pointer-events-none"></div>
+                            <div class="absolute bottom-10 left-0 right-0 text-center px-4 pointer-events-none z-20">
+                                <p class="text-[10px] font-black text-red-500 uppercase tracking-widest mb-1">Intro Clásica</p>
+                                <p class="text-xs text-white/80 font-bold italic tracking-tighter">Gengar vs Nidorino</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="teambuilder" class="stagger-section min-h-screen pt-32 pb-12 px-6">
+        <div class="max-w-[1440px] mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <div class="reveal-child lg:col-span-3 order-2 lg:order-1">
+                    <div class="sticky top-32 bg-slate-800 p-6 rounded-[2.5rem] border border-slate-700 shadow-xl">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 block text-center">Buscador</label>
+                        <div class="relative">
+                            <input type="text" id="poke-search" autocomplete="off" placeholder="Buscar Pokémon..." class="w-full p-4 rounded-2xl bg-slate-900 border border-slate-600 focus:border-yellow-500 outline-none text-sm font-medium">
+                            <div id="autocomplete-list" class="absolute z-50 w-full mt-2 bg-slate-800 border border-slate-600 rounded-2xl max-h-64 overflow-y-auto hidden"></div>
+                        </div>
+                        <div id="search-result" class="mt-6 flex flex-col items-center p-6 bg-slate-900/50 rounded-[2rem] min-h-[300px] justify-center border-2 border-dashed border-slate-700 text-center">
+                            <p class="text-slate-500 text-xs italic px-4">Busca un Pokémon para añadirlo a tu equipo.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal-child lg:col-span-6 order-3 lg:order-2">
+                    <div class="flex justify-between items-center mb-8 px-4">
+                        <h2 class="text-3xl font-black italic uppercase">Mi Equipo</h2>
+                        <span class="text-xs bg-yellow-500 text-black px-4 py-1.5 rounded-full font-black" id="team-count">0 / 6</span>
+                    </div>
+                    <div id="team-slots" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                </div>
+                <div class="reveal-child lg:col-span-3 order-1 lg:order-3">
+                    <div class="sticky top-32 flex flex-col items-center w-full bg-slate-800/30 p-8 rounded-[3rem] border border-slate-700/50">
+                        <div class="relative">
+                            <div class="w-48 h-48 rounded-full border-8 border-yellow-500 overflow-hidden bg-slate-900 flex items-center justify-center">
+                                <img id="user-avatar" src="https://play.pokemonshowdown.com/sprites/trainers/red.png" class="w-36 h-36 object-contain">
+                            </div>
+                            <button onclick="toggleAvatarModal()" class="absolute bottom-2 right-2 bg-yellow-500 text-black p-3 rounded-full border-4 border-slate-800 hover:scale-110 transition-transform shadow-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                            </button>
+                        </div>
+                        <h3 class="mt-6 text-xl font-black italic uppercase">Entrenador</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="quiz" class="stagger-section min-h-screen py-24 bg-slate-900 flex flex-col items-center justify-center">
+        <div class="max-w-2xl w-full text-center px-6">
+            <h2 class="reveal-child text-3xl font-black mb-10 italic uppercase text-indigo-400">Test de Identidad</h2>
+            <div id="quiz-container" class="reveal-child bg-indigo-900/20 p-12 rounded-[3rem] border border-indigo-500/30 shadow-2xl">
+                <div id="quiz-content">
+                    <p class="text-xl mb-10 font-medium italic">"Si ves un tesoro en una cueva peligrosa, ¿qué haces?"</p>
+                    <div class="grid gap-5">
+                        <button onclick="procesarTest('impulsivo')" class="p-5 bg-indigo-600 text-white font-black rounded-2xl uppercase text-xs tracking-widest hover:bg-indigo-500 transition-all">¡Voy directo!</button>
+                        <button onclick="procesarTest('cauto')" class="p-5 bg-slate-800 text-slate-200 font-black rounded-2xl uppercase text-xs tracking-widest hover:bg-slate-700 transition-all">Mejor pido ayuda.</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="map" class="stagger-section min-h-screen py-24 bg-slate-900 flex flex-col items-center">
+        <h2 class="reveal-child text-3xl font-black mb-12 italic uppercase text-red-500">Explorador de Kanto</h2>
+        <div class="reveal-child w-full max-w-5xl px-6 text-center">
+            <div class="map-container rounded-[3rem] border-8 border-slate-800 relative shadow-2xl overflow-hidden" id="mapa-interactivo"></div>
+            <div id="map-info" class="mt-6 p-6 bg-slate-800 rounded-2xl border border-slate-700 text-slate-400 italic min-h-[80px] flex items-center justify-center">
+                Haz clic en los puntos rojos del mapa para explorar la región.
+            </div>
+        </div>
+    </section>
+
+    <div id="avatar-modal" class="fixed inset-0 z-[110] flex items-center justify-center bg-black/90 backdrop-blur-sm hidden p-4">
+        <div class="bg-slate-800 border border-slate-700 p-8 rounded-[3rem] max-w-lg w-full text-center shadow-2xl">
+            <h3 class="text-2xl font-black mb-6 italic uppercase text-yellow-500">Elige tu Avatar</h3>
+            <div class="grid grid-cols-3 gap-4 mb-8 max-h-96 overflow-y-auto" id="avatar-options"></div>
+            <button onclick="toggleAvatarModal()" class="w-full py-4 bg-slate-700 text-white rounded-2xl font-black uppercase text-xs hover:bg-slate-600 transition-colors">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = { threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const children = entry.target.querySelectorAll('.reveal-child');
+                        children.forEach((child, index) => {
+                            setTimeout(() => {
+                                child.classList.add('active-child');
+                            }, index * 200); 
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.stagger-section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if(menu) menu.classList.toggle('hidden');
+        }
+    </script>
+    <script src="js.js"></script>
+</body>
+</html>
