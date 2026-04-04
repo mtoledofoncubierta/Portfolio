@@ -1,82 +1,231 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <title>Mi Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marina | Portfolio</title>
   <link rel="stylesheet" href="style.css">
+  <!-- EmailJS SDK (Funcionalidad Backend) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
-<header>
-  <h1>Hola, soy Marina 👋</h1>
-  <p>Desarrolladora Web Junior</p>
+<!-- NAVBAR -->
+<header id="navbar">
+  <span class="logo">&lt;Marina /&gt;</span>
+  <nav>
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+  <!-- Funcionalidad 3: Toggle de tema claro/oscuro -->
+  <button id="theme-toggle" aria-label="Cambiar tema">☀️</button>
 </header>
 
-<section class="portfolio">
-
-  <h2>Mis Proyectos</h2>
-
-  <article class="card">
-    <div class="card-image">
-      <img src="img/sabores.jpg" alt="Sabores de Azeroth">
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-content">
+    <p class="hero-tag">👋 ¡Hola! Soy</p>
+    <h1 class="hero-name">Marina</h1>
+    <!-- Funcionalidad 1: Typewriter -->
+    <p class="hero-subtitle">
+      <span id="typewriter"></span><span class="cursor">|</span>
+    </p>
+    <div class="hero-btns">
+      <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
+      <a href="#contacto" class="btn btn-outline">Contactar</a>
     </div>
-
-   <div class="card-content">
-      <h3>Landing Page</h3>
-      <p>Mi primer proyecto de landing page.</p>
-
-      <a href="proyectos/weblandingpage/index.html" target="_blank" rel="noopener noreferrer">
-        Ver proyecto
-      </a>
-    </div>
-  </article>
-
-  <article class="card">
-    <div class="card-image">
-      <img src="img/sabores.jpg" alt="Sabores de Azeroth">
-    </div>
-
-    <div class="card-content">
-      <h3>Sabores de Azeroth</h3>
-      <p>Web temática inspirada en cocina de World of Warcraft.</p>
-
-      <a href="proyectos/saboresdeazeroth/index.html" target="_blank" rel="noopener noreferrer">
-        Ver proyecto
-      </a>
-    </div>
-  </article>
-
- <article class="card">
-    <div class="card-image">
-      <img src="img/tres.jpg" alt="Tres en raya">
-    </div>
-
-    <div class="card-content">
-      <h3>Tres en raya</h3>
-      <p>Tres en raya con html y javascript.</p>
-
-      <a href="proyectos/Tres_en_raya/index.html" target="_blank" rel="noopener noreferrer">
-        Ver proyecto
-      </a>
-    </div>
-  </article>
-
- <article class="card">
-    <div class="card-image">
-      <img src="img/pokemon.png" alt="Proyecto Pokémon">
-    </div>
-
-    <div class="card-content">
-      <h3>Mi equipo Pokémon</h3>
-      <p>Mi primer ejercicio con CSS y JS creando mi equipo Pokémon.</p>
-
-      <a href="proyectos/mi_equipo_pokemon_v2/index.html" target="_blank" rel="noopener noreferrer">
-        Ver proyecto
-      </a>
-    </div>
-  </article>
-
+  </div>
+  <div class="hero-bg-blur"></div>
 </section>
 
+<!-- SOBRE MÍ -->
+<section class="sobre-mi-section" id="sobre-mi">
+  <h2 class="section-title reveal">Sobre mí</h2>
+  <div class="sobre-mi-content">
+    <div class="sobre-mi-text reveal">
+      <p>Soy estudiante de <strong>Desarrollo de Aplicaciones Multiplataforma</strong>, apasionada por crear experiencias web bonitas y funcionales.</p>
+      <p>Me gusta combinar el diseño con la programación para dar vida a ideas creativas.</p>
+    </div>
+    <div class="skills reveal">
+      <span class="skill-badge">HTML5</span>
+      <span class="skill-badge">CSS3</span>
+      <span class="skill-badge">JavaScript</span>
+      <span class="skill-badge">PHP</span>
+      <span class="skill-badge">MySQL</span>
+      <span class="skill-badge">Git</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section class="proyectos-section" id="proyectos">
+  <h2 class="section-title reveal">Mis Proyectos</h2>
+
+  <!-- Funcionalidad 4: Flip 3D de cards (clic para girar) -->
+  <p class="flip-instruccion reveal">Haz clic en una card para ver sus detalles</p>
+
+  <!-- Funcionalidad 2: Scroll Reveal en cada card -->
+  <div class="portfolio">
+
+    <article class="card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-image">
+            <img src="img/gengar_vs_nidorino.jpg" alt="Landing Page">
+          </div>
+          <div class="card-front-body">
+            <h3>Landing Page</h3>
+            <a href="proyectos/weblandingpage/index.html" class="card-front-btn" target="_blank" rel="noopener noreferrer">Ver proyecto →</a>
+          </div>
+          <span class="flip-hint">Ver detalles ↺</span>
+        </div>
+        <div class="card-back">
+          <div class="card-tags">
+            <span class="tag html">HTML</span>
+            <span class="tag css">CSS</span>
+          </div>
+          <h3>Landing Page</h3>
+          <p>Mi primer proyecto de landing page.</p>
+          <a href="proyectos/weblandingpage/index.html" target="_blank" rel="noopener noreferrer">Ver proyecto →</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-image">
+            <img src="img/sabores.jpg" alt="Sabores de Azeroth">
+          </div>
+          <div class="card-front-body">
+            <h3>Sabores de Azeroth</h3>
+            <a href="proyectos/saboresdeazeroth/index.html" class="card-front-btn" target="_blank" rel="noopener noreferrer">Ver proyecto →</a>
+          </div>
+          <span class="flip-hint">Ver detalles ↺</span>
+        </div>
+        <div class="card-back">
+          <div class="card-tags">
+            <span class="tag html">HTML</span>
+            <span class="tag css">CSS</span>
+          </div>
+          <h3>Sabores de Azeroth</h3>
+          <p>Web temática inspirada en la cocina de World of Warcraft.</p>
+          <a href="proyectos/saboresdeazeroth/index.html" target="_blank" rel="noopener noreferrer">Ver proyecto →</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-image">
+            <img src="img/tres.jpg" alt="Tres en raya">
+          </div>
+          <div class="card-front-body">
+            <h3>Tres en raya</h3>
+            <a href="proyectos/Tres_en_raya/index.html" class="card-front-btn" target="_blank" rel="noopener noreferrer">Ver proyecto →</a>
+          </div>
+          <span class="flip-hint">Ver detalles ↺</span>
+        </div>
+        <div class="card-back">
+          <div class="card-tags">
+            <span class="tag js">JavaScript</span>
+            <span class="tag css">CSS</span>
+          </div>
+          <h3>Tres en raya</h3>
+          <p>Tres en raya con HTML y JavaScript.</p>
+          <a href="proyectos/Tres_en_raya/index.html" target="_blank" rel="noopener noreferrer">Ver proyecto →</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-image">
+            <img src="img/pokemon.png" alt="Mi equipo Pokémon">
+          </div>
+          <div class="card-front-body">
+            <h3>Mi equipo Pokémon</h3>
+            <a href="proyectos/mi_equipo_pokemon_v2/index.html" class="card-front-btn" target="_blank" rel="noopener noreferrer">Ver proyecto →</a>
+          </div>
+          <span class="flip-hint">Ver detalles ↺</span>
+        </div>
+        <div class="card-back">
+          <div class="card-tags">
+            <span class="tag js">JavaScript</span>
+            <span class="tag css">CSS</span>
+          </div>
+          <h3>Mi equipo Pokémon</h3>
+          <p>Ejercicio con CSS y JS creando mi equipo Pokémon.</p>
+          <a href="proyectos/mi_equipo_pokemon_v2/index.html" target="_blank" rel="noopener noreferrer">Ver proyecto →</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-image">
+            <img src="proyectos/se%20busca/img/mapa.jpg" alt="Se Busca">
+          </div>
+          <div class="card-front-body">
+            <h3>Se Busca</h3>
+            <a href="proyectos/se%20busca/index.html" class="card-front-btn" target="_blank" rel="noopener noreferrer">Ver proyecto →</a>
+          </div>
+          <span class="flip-hint">Ver detalles ↺</span>
+        </div>
+        <div class="card-back">
+          <div class="card-tags">
+            <span class="tag html">HTML</span>
+            <span class="tag css">CSS</span>
+          </div>
+          <h3>Se Busca</h3>
+          <p>Cartel de "se busca" animado con CSS.</p>
+          <a href="proyectos/se%20busca/index.html" target="_blank" rel="noopener noreferrer">Ver proyecto →</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contacto-section" id="contacto">
+  <h2 class="section-title reveal">Contacto</h2>
+  <p class="contacto-sub reveal">¿Tienes algún proyecto en mente? ¡Escríbeme!</p>
+
+  <!-- Funcionalidad 5 (Backend): Formulario con EmailJS -->
+  <form id="contact-form" class="contact-form reveal" novalidate>
+    <div class="form-group">
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+    </div>
+    <div class="form-group">
+      <label for="mensaje">Mensaje</label>
+      <textarea id="mensaje" name="mensaje" rows="5" placeholder="Escribe tu mensaje..." required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary btn-submit">
+      <span class="btn-text">Enviar mensaje</span>
+      <span class="btn-loading" hidden>Enviando...</span>
+    </button>
+    <p id="form-status" class="form-status" aria-live="polite"></p>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Hecho con ❤️ por Marina · <span id="year"></span></p>
+</footer>
+
+<script src="main.js"></script>
 </body>
 </html>
