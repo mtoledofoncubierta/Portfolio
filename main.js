@@ -14,7 +14,11 @@ const EMAILJS_PUBLIC_KEY  = "j7mNqiWiNtcaaOWmg";   // Account > API Keys
 const EMAILJS_SERVICE_ID  = "service_ut228kj";   // Email Services
 const EMAILJS_TEMPLATE_ID = "template_unt62ak";  // Email Templates
 
-emailjs.init(EMAILJS_PUBLIC_KEY);
+const hasEmailJs = typeof window.emailjs !== "undefined";
+
+if (hasEmailJs) {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+}
 
 // ============================================================
 // FUNCIONALIDAD 1 (FRONTEND) — Efecto Typewriter en el hero
@@ -87,15 +91,18 @@ const htmlEl    = document.documentElement;
 const savedTheme = localStorage.getItem("theme") || "dark";
 
 htmlEl.setAttribute("data-theme", savedTheme);
-themeBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙";
 
-themeBtn.addEventListener("click", () => {
-  const actual  = htmlEl.getAttribute("data-theme");
-  const nuevo   = actual === "dark" ? "light" : "dark";
-  htmlEl.setAttribute("data-theme", nuevo);
-  localStorage.setItem("theme", nuevo);
-  themeBtn.textContent = nuevo === "dark" ? "☀️" : "🌙";
-});
+if (themeBtn) {
+  themeBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+
+  themeBtn.addEventListener("click", () => {
+    const actual  = htmlEl.getAttribute("data-theme");
+    const nuevo   = actual === "dark" ? "light" : "dark";
+    htmlEl.setAttribute("data-theme", nuevo);
+    localStorage.setItem("theme", nuevo);
+    themeBtn.textContent = nuevo === "dark" ? "☀️" : "🌙";
+  });
+}
 
 // ============================================================
 // FUNCIONALIDAD 4 (FRONTEND) — Flip 3D de cards
@@ -124,53 +131,61 @@ window.addEventListener("scroll", () => {
 // ============================================================
 const form       = document.getElementById("contact-form");
 const statusEl   = document.getElementById("form-status");
-const btnText    = form.querySelector(".btn-text");
-const btnLoading = form.querySelector(".btn-loading");
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+if (form && statusEl) {
+  const btnText    = form.querySelector(".btn-text");
+  const btnLoading = form.querySelector(".btn-loading");
 
-  // Validación básica del lado cliente
-  const nombre  = form.nombre.value.trim();
-  const email   = form.email.value.trim();
-  const mensaje = form.mensaje.value.trim();
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  if (!nombre || !email || !mensaje) {
-    mostrarEstado("Por favor, rellena todos los campos.", "error");
-    return;
+    // Validación básica del lado cliente
+    const nombre  = form.nombre.value.trim();
+    const email   = form.email.value.trim();
+    const mensaje = form.mensaje.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!nombre || !email || !mensaje) {
+      mostrarEstado("Por favor, rellena todos los campos.", "error");
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      mostrarEstado("Introduce un email válido.", "error");
+      return;
+    }
+
+    if (!hasEmailJs) {
+      mostrarEstado("No se pudo cargar el servicio de envío. Inténtalo más tarde.", "error");
+      return;
+    }
+
+    // Estado de carga
+    btnText.hidden    = true;
+    btnLoading.hidden = false;
+    statusEl.className = "form-status";
+    statusEl.style.display = "none";
+
+    // Enviar email via EmailJS (Backend)
+    emailjs
+      .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+      .then(() => {
+        mostrarEstado("✅ ¡Mensaje enviado! Te responderé lo antes posible.", "success");
+        form.reset();
+      })
+      .catch(() => {
+        mostrarEstado("❌ Hubo un error al enviar. Inténtalo de nuevo.", "error");
+      })
+      .finally(() => {
+        btnText.hidden    = false;
+        btnLoading.hidden = true;
+      });
+  });
+
+  function mostrarEstado(mensaje, tipo) {
+    statusEl.textContent = mensaje;
+    statusEl.className   = "form-status " + tipo;
   }
-
-  if (!emailRegex.test(email)) {
-    mostrarEstado("Introduce un email válido.", "error");
-    return;
-  }
-
-  // Estado de carga
-  btnText.hidden    = true;
-  btnLoading.hidden = false;
-  statusEl.className = "form-status";
-  statusEl.style.display = "none";
-
-  // Enviar email via EmailJS (Backend)
-  emailjs
-    .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
-    .then(() => {
-      mostrarEstado("✅ ¡Mensaje enviado! Te responderé lo antes posible.", "success");
-      form.reset();
-    })
-    .catch(() => {
-      mostrarEstado("❌ Hubo un error al enviar. Inténtalo de nuevo.", "error");
-    })
-    .finally(() => {
-      btnText.hidden    = false;
-      btnLoading.hidden = true;
-    });
-});
-
-function mostrarEstado(mensaje, tipo) {
-  statusEl.textContent = mensaje;
-  statusEl.className   = "form-status " + tipo;
 }
 
 // ============================================================

@@ -6,12 +6,13 @@ body {
 
 .contenedor {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     background-image: url("img/mapa.jpg");
     background-size: cover;
     background-position: center;
     position: relative;
     overflow: hidden;
+    padding: 16px;
 }
 
 .tabla {
@@ -76,4 +77,59 @@ body {
 .tabla:hover {
     transform: translate(-50%, -50%) scale(1.08) rotate(0deg);
     box-shadow: 0 12px 25px rgba(0,0,0,0.7);
+}
+
+@media (max-width: 900px) {
+    .tabla {
+        width: min(280px, 86vw);
+        height: 360px;
+    }
+
+    .tabla1 {
+        top: 24%;
+        left: 26%;
+    }
+
+    .tabla3 {
+        left: 74%;
+    }
+}
+
+@media (max-width: 640px) {
+    .contenedor {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 16px;
+        overflow: visible;
+        background-position: top center;
+        padding: 20px 12px;
+    }
+
+    .tabla {
+        position: relative;
+        inset: auto;
+        width: min(320px, 92vw);
+        height: auto;
+        min-height: 350px;
+        transform: none;
+    }
+
+    .tabla1,
+    .tabla2,
+    .tabla3,
+    .tabla:hover {
+        transform: none;
+        left: auto;
+        top: auto;
+    }
+
+    .titulo {
+        font-size: 18px;
+    }
+
+    .recompensa {
+        font-size: 16px;
+    }
 }

@@ -79,6 +79,32 @@
             border-color: rgba(244, 63, 94, 0.95);
             z-index: 12;
         }
+
+        @media (max-width: 768px) {
+            .map-container {
+                min-height: 220px;
+                border-width: 6px !important;
+                border-radius: 1.75rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .map-container {
+                min-height: 190px;
+                border-width: 4px !important;
+                border-radius: 1.25rem !important;
+            }
+
+            #map-info {
+                min-height: 130px !important;
+                font-size: 0.9rem;
+            }
+
+            #avatar-modal > div {
+                padding: 1.25rem !important;
+                border-radius: 1.25rem !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-slate-900 text-white overflow-x-hidden font-sans">

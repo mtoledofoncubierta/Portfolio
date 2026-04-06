@@ -506,3 +506,96 @@ footer {
 .icon.twitter:hover { color: #000; }
 .icon.instagram:hover { color: #e1306c; }
 .icon.youtube:hover { color: #ff0000; }
+
+@media (max-width: 900px) {
+    :root {
+        --padding-header: 112px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    #main-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    #main-nav a {
+        margin-left: 0;
+    }
+
+    #featured-recipe .card-shadow,
+    #featured-chef .card-shadow {
+        gap: 18px;
+        padding: 18px;
+    }
+
+    .recipe-image-container {
+        width: 100%;
+        max-width: 520px;
+        margin: 0 auto 16px;
+    }
+
+    .gallery-item {
+        width: min(360px, 100%);
+    }
+
+    #list-links .wow-button {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .contact-section {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --padding-header: 146px;
+    }
+
+    main {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .wow-button {
+        width: 100%;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .recipe {
+        padding: 16px;
+    }
+
+    .gallery-container {
+        gap: 16px;
+    }
+
+    .gallery-item img {
+        height: 280px;
+    }
+
+    .contact-section {
+        margin: 20px auto;
+        padding: 18px;
+    }
+
+    .redes-sociales .icon {
+        margin: 0 8px;
+        font-size: 24px;
+    }
+}

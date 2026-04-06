@@ -46,6 +46,7 @@ body {
   color: var(--text);
   font-family: system-ui, -apple-system, sans-serif;
   transition: background 0.35s ease, color 0.35s ease;
+  overflow-x: hidden;
 }
 
 /* ============================================================
@@ -632,17 +633,86 @@ footer {
    RESPONSIVE
    ============================================================ */
 @media (max-width: 768px) {
-  header { padding: 12px 20px; }
-  nav ul { gap: 1.2rem; }
-  nav a  { font-size: 0.82rem; }
+  section {
+    padding: 4rem 1.2rem;
+  }
+
+  header {
+    padding: 10px 14px;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .logo {
+    width: 100%;
+    text-align: center;
+  }
+
+  #theme-toggle {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+    margin-left: auto;
+    flex-shrink: 0;
+    touch-action: manipulation;
+  }
+
+  nav {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  nav ul {
+    width: max-content;
+    min-width: 100%;
+    gap: 1rem;
+    justify-content: center;
+    padding-bottom: 4px;
+  }
+
+  nav a {
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .hero {
+    min-height: 90vh;
+    padding: 0 1rem;
+  }
+
+  .hero-subtitle {
+    min-height: 3rem;
+  }
+
+  .portfolio {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .card {
+    height: 390px;
+  }
 
   .hero-btns {
     flex-direction: column;
     align-items: center;
   }
+
+  .btn-submit {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 @media (max-width: 540px) {
-  nav { display: none; }
+  .hero-bg-blur {
+    width: 380px;
+    height: 380px;
+  }
+
+  .flip-instruccion {
+    margin-bottom: 1.2rem;
+  }
 }
 
