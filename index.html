@@ -4,19 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marina | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=JetBrains+Mono:wght@500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <!-- EmailJS SDK (Funcionalidad Backend) -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
+<div class="page-backdrop" aria-hidden="true">
+  <span class="gradient-orb orb-a"></span>
+  <span class="gradient-orb orb-b"></span>
+  <span class="gradient-orb orb-c"></span>
+  <span class="grid-waves"></span>
+</div>
+
 <!-- NAVBAR -->
 <header id="navbar">
   <span class="logo">&lt;Marina /&gt;</span>
-  <nav>
+  <button id="nav-toggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <nav id="site-nav">
     <ul>
       <li><a href="#inicio">Inicio</a></li>
       <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#frase-del-dia">Frase del día</a></li>
       <li><a href="#proyectos">Proyectos</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
@@ -38,6 +54,11 @@
       <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
       <a href="#contacto" class="btn btn-outline">Contactar</a>
     </div>
+    <div class="hero-pillars">
+      <span>Responsive</span>
+      <span>3 tipografías</span>
+      <span>API externa real</span>
+    </div>
   </div>
   <div class="hero-bg-blur"></div>
 </section>
@@ -58,6 +79,38 @@
       <span class="skill-badge">MySQL</span>
       <span class="skill-badge">Git</span>
     </div>
+  </div>
+</section>
+
+<!-- FRASE DEL DIA -->
+<section class="quote-section" id="frase-del-dia">
+  <h2 class="section-title reveal">Frase del día</h2>
+  <p class="quote-intro reveal">Esta sección consulta una API pública y selecciona una frase distinta para cada día del año, sin tocar el formulario de EmailJS.</p>
+
+  <div class="quote-grid reveal">
+    <article class="quote-stat-card">
+      <p class="quote-stat-label">Día del año</p>
+      <strong class="quote-stat-value" id="quote-day-number">--</strong>
+    </article>
+    <article class="quote-stat-card">
+      <p class="quote-stat-label">Fuente</p>
+      <strong class="quote-stat-value quote-stat-small" id="quote-source">--</strong>
+    </article>
+    <article class="quote-stat-card">
+      <p class="quote-stat-label">Actualización</p>
+      <strong class="quote-stat-value quote-stat-small" id="quote-refresh">Cada 24 h</strong>
+    </article>
+  </div>
+
+  <div class="quote-panel reveal">
+    <p class="quote-panel-kicker">Backend con API externa</p>
+    <p id="quote-status" class="quote-status" aria-live="polite">Cargando frase del día...</p>
+    <blockquote class="quote-card">
+      <p id="quote-text">"--"</p>
+      <footer>
+        <span id="quote-author">Autor desconocido</span>
+      </footer>
+    </blockquote>
   </div>
 </section>
 

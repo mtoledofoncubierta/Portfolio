@@ -89,6 +89,8 @@ document.querySelectorAll(".reveal").forEach((el) => {
 const themeBtn  = document.getElementById("theme-toggle");
 const htmlEl    = document.documentElement;
 const savedTheme = localStorage.getItem("theme") || "dark";
+const navToggle = document.getElementById("nav-toggle");
+const siteNav = document.getElementById("site-nav");
 
 htmlEl.setAttribute("data-theme", savedTheme);
 
@@ -101,6 +103,22 @@ if (themeBtn) {
     htmlEl.setAttribute("data-theme", nuevo);
     localStorage.setItem("theme", nuevo);
     themeBtn.textContent = nuevo === "dark" ? "☀️" : "🌙";
+  });
+}
+
+if (navToggle && siteNav) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = siteNav.classList.toggle("is-open");
+    navToggle.classList.toggle("is-open", isOpen);
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  siteNav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      siteNav.classList.remove("is-open");
+      navToggle.classList.remove("is-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    });
   });
 }
 
@@ -186,6 +204,63 @@ if (form && statusEl) {
     statusEl.textContent = mensaje;
     statusEl.className   = "form-status " + tipo;
   }
+}
+
+const quoteStatusEl = document.getElementById("quote-status");
+const quoteTextEl = document.getElementById("quote-text");
+const quoteAuthorEl = document.getElementById("quote-author");
+const quoteDayNumberEl = document.getElementById("quote-day-number");
+const quoteSourceEl = document.getElementById("quote-source");
+
+if (
+  quoteStatusEl &&
+  quoteTextEl &&
+  quoteAuthorEl &&
+  quoteDayNumberEl &&
+  quoteSourceEl
+) {
+  loadDailyQuote();
+}
+
+async function loadDailyQuote() {
+  try {
+    const response = await fetch("https://dummyjson.com/quotes");
+
+    if (!response.ok) {
+      throw new Error("No se pudo cargar la frase del día.");
+    }
+
+    const data = await response.json();
+    const quotes = Array.isArray(data.quotes) ? data.quotes : [];
+
+    if (!quotes.length) {
+      throw new Error("La API no devolvió frases disponibles.");
+    }
+
+    const dayOfYear = getDayOfYear(new Date());
+    const quote = quotes[dayOfYear % quotes.length];
+
+    quoteDayNumberEl.textContent = String(dayOfYear);
+    quoteSourceEl.textContent = "DummyJSON Quotes API";
+    quoteTextEl.textContent = `\"${quote.quote}\"`;
+    quoteAuthorEl.textContent = quote.author || "Autor desconocido";
+    quoteStatusEl.textContent = "Frase sincronizada correctamente desde la API.";
+    quoteStatusEl.className = "quote-status is-success";
+  } catch {
+    quoteDayNumberEl.textContent = String(getDayOfYear(new Date()));
+    quoteSourceEl.textContent = "Modo de respaldo";
+    quoteTextEl.textContent = '"Cada día es una oportunidad para construir algo mejor."';
+    quoteAuthorEl.textContent = "Portfolio local";
+    quoteStatusEl.textContent = "No se pudo conectar con la API. Se muestra una frase de respaldo.";
+    quoteStatusEl.className = "quote-status is-warning";
+  }
+}
+
+function getDayOfYear(date) {
+  const start = new Date(date.getFullYear(), 0, 0);
+  const diff = date - start;
+  const oneDay = 1000 * 60 * 60 * 24;
+  return Math.floor(diff / oneDay);
 }
 
 // ============================================================
